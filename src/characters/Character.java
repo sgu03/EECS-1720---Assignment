@@ -1,5 +1,6 @@
 package characters;
 
+import java.util.Random;
 import game.*;
 
 public class Character {
@@ -8,6 +9,8 @@ public class Character {
 	protected double dodgeChance;
 	protected boolean attackSuccess;
 	protected boolean dodgeSuccess;
+	
+	private Random random = new Random();
 	
 	public Character(int hp) {
 		this.hp = hp;
@@ -19,16 +22,19 @@ public class Character {
 		return hp;
 	}
 	
-	public int damage(int damage) {
-		return hp - damage;
+	public void damage(int damage) {
+		hp -= damage;
+		if (hp <= 0) {
+			hp = 0;
+		}
 	}
 	
-	public int heal(int heal) {
-		return hp + heal;
+	public void heal(int heal) {
+		hp += heal;
 	}
 
 	public boolean attack() {
-		if (game.Map.random.nextDouble() <= attackChance) {
+		if (random.nextDouble() <= attackChance) {
 			attackSuccess = true;
 		} else {
 			attackSuccess = false;
@@ -37,7 +43,7 @@ public class Character {
 	}
 	
 	public boolean dodge() {
-		if (game.Map.random.nextDouble() <= dodgeChance) {
+		if (random.nextDouble() <= dodgeChance) {
 			dodgeSuccess = true;
 		} else {
 			dodgeSuccess = false;

@@ -1,27 +1,50 @@
 package rooms;
 
+import java.util.Random;
+import characters.Player;
+
 public class EventRoom extends Room {
 	private int type;
-	public String name;
+	private String name;
+	
+	private Random random = new Random();
 	
 	public EventRoom(int type) {
 		this.type = type;
 		switch (type) {
 			case 0:
 				name = "Trap";
-				game.Game.player.damage(5);
 				break;
 			case 1:
 				name = "Healing Fountain";
-				game.Game.player.heal(10);
 				break;
 			case 2:
 				name = "Curse";
-				game.Game.player.curse(0.2);
+				break;
 			case 3:
 				name = "Treasure";
-				game.Game.player.gainGachaTickets(game.Map.random.nextInt(1, 5));
 				break;
 		}
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void applyEvent(Player player) {
+		switch (type) {
+		case 0:
+			player.damage(5);
+			break;
+		case 1:
+			player.heal(10);
+			break;
+		case 2:
+			player.curse(0.2);
+			break;
+		case 3:
+			player.gainGachaTickets(random.nextInt(1, 5));
+			break;
+	}
 	}
 }

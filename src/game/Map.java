@@ -9,7 +9,7 @@ public class Map {
 	public static final int MONSTER_MAX_HP = 60;
 	public static final int MONSTER_MIN_HP = MONSTER_MAX_HP - 30;
 
-	public static Random random = new Random();
+	private Random random = new Random();
 	
 	public GachaRoom gachaRoom;
 	private int monsterCount;
@@ -38,6 +38,7 @@ public class Map {
 		}
 		
 		// Initialize next room list
+		availableRooms = new ArrayList<Room>();
 		nextRoomList = newNextRoomList();
 		
 	}
@@ -47,6 +48,7 @@ public class Map {
 	}
 	
 	public void updateAvailableRooms() {
+		availableRooms.clear();
 		for (MonsterRoom m : monsterRooms) {
 	        if (!m.getClearStatus()) {
 	            availableRooms.add(m);
@@ -63,8 +65,13 @@ public class Map {
 		nextRoomList.clear();
 		updateAvailableRooms();
 		
-		while (!availableRooms.isEmpty() && nextRoomList.size() < 3) {
-			nextRoomList.add(availableRooms.get(random.nextInt(0, availableRooms.size())));
+		ArrayList<Room> temp = new ArrayList<>(availableRooms);
+		Collections.shuffle(temp);
+		int count = 0;
+		
+		while (count < temp.size() && nextRoomList.size() < 3) {
+			nextRoomList.add(temp.get(count));
+			count++;
 		}
 		
 		return nextRoomList;

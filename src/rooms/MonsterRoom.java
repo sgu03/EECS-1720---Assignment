@@ -26,6 +26,6 @@ public class MonsterRoom extends Room {
 	@ Override
 	public void clear() {
 		super.clear();
-		game.Game.defeatMonster();
+		//game.Game.defeatMonster();
 	}
 }
