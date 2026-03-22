@@ -3,7 +3,7 @@ package characters;
 import java.util.Random;
 import game.*;
 
-public class Character {
+public abstract class Character {
 	protected int hp;
 	protected double attackChance;
 	protected double dodgeChance;
@@ -20,6 +20,14 @@ public class Character {
 	
 	public int getHp() {
 		return hp;
+	}
+	
+	public double getAttackChance() {
+		return attackChance;
+	}
+	
+	public double getDodgeChance() {
+		return dodgeChance;
 	}
 	
 	public void damage(int damage) {

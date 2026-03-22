@@ -31,20 +31,26 @@ public class EventRoom extends Room {
 		return name;
 	}
 	
-	public void applyEvent(Player player) {
+	public String applyEvent(Player player) {
 		switch (type) {
-		case 0:
-			player.damage(5);
-			break;
-		case 1:
-			player.heal(10);
-			break;
-		case 2:
-			player.curse(0.2);
-			break;
-		case 3:
-			player.gainGachaTickets(random.nextInt(1, 5));
-			break;
+			case 0:
+				player.damage(5);
+				return "Your HP -5";
+			case 1:
+				player.heal(10);
+				return "Your HP +10";
+			case 2:
+				player.curse(0.2);
+				return "Next Dodge Chance -20%";
+			case 3:
+				int num = random.nextInt(1, 5);
+				player.gainGachaTickets(num);
+				return "Gain " + num + " gacha tickets!";
+		}
+		return "";
 	}
+	
+	public String toString() {
+		return "Event Room [Random event will occur]";
 	}
 }

@@ -1,17 +1,23 @@
 package characters;
 
-import game.Game;
-import game.Map;
+import java.util.ArrayList;
+
+import items.*;
 
 public class Player extends Character {
 	private int gachaTickets;
-	
+	private Backpack backpack;
 	
 	public Player(int hp) {
 		super(hp);
 		gachaTickets = 5;
 		attackChance = 0.6;
 		dodgeChance = 0.8;
+		backpack = new Backpack();
+	}
+	
+	public ArrayList<Item> getBackpack() {
+		return backpack.getItemList();
 	}
 	
 	public int getGachaTickets() {

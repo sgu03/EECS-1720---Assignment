@@ -39,6 +39,7 @@ public class Map {
 		
 		// Initialize next room list
 		availableRooms = new ArrayList<Room>();
+		nextRoomList = new ArrayList<Room>();
 		nextRoomList = newNextRoomList();
 		
 	}
@@ -62,7 +63,7 @@ public class Map {
 	}
 	
 	public ArrayList<Room> newNextRoomList() {
-		nextRoomList.clear();
+		if (!nextRoomList.isEmpty()) nextRoomList.clear();
 		updateAvailableRooms();
 		
 		ArrayList<Room> temp = new ArrayList<>(availableRooms);

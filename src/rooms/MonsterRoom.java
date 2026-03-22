@@ -11,6 +11,10 @@ public class MonsterRoom extends Room {
 		this.level = difficultyLevel(monster.getHp());
 	}
 	
+	public Monster getMonster() {
+		return monster;
+	}
+	
 	private int difficultyLevel(int hp) {
 		int difficulty;
 		if (hp <= game.Map.MONSTER_MIN_HP + 10) {
@@ -23,9 +27,7 @@ public class MonsterRoom extends Room {
 		return difficulty;
 	}
 	
-	@ Override
-	public void clear() {
-		super.clear();
-		//game.Game.defeatMonster();
+	public String toString() {
+		return "Monster Room [Level " + level + "]";
 	}
 }
