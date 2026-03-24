@@ -1,10 +1,10 @@
-package game;
+package model.game;
 
 import java.util.*;
 
-import characters.*;
-import rooms.*;
-import items.*;
+import model.characters.*;
+import model.items.*;
+import model.rooms.*;
 
 public class Game {
 	public static final int PLAYER_HP = 40;	

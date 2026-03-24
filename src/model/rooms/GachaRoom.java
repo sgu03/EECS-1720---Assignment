@@ -1,4 +1,4 @@
-package rooms;
+package model.rooms;
 
 public class GachaRoom extends Room {
 	public GachaRoom() {

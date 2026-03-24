@@ -1,4 +1,4 @@
-package characters;
+package model.characters;
 
 public class Monster extends Character {
 	public Monster(int hp) {

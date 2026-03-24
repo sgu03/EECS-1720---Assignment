@@ -1,7 +1,7 @@
-package rooms;
+package model.rooms;
 
-import characters.*;
-import game.*;
+import model.characters.*;
+import model.game.*;
 
 public abstract class Room {
 	protected boolean isClear = false;

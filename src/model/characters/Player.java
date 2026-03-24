@@ -1,8 +1,8 @@
-package characters;
+package model.characters;
 
 import java.util.ArrayList;
 
-import items.*;
+import model.items.*;
 
 public class Player extends Character {
 	private int gachaTickets;

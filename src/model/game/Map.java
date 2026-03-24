@@ -1,9 +1,9 @@
-package game;
+package model.game;
 
 import java.util.*;
 
-import rooms.*;
-import characters.*;
+import model.characters.*;
+import model.rooms.*;
 
 public class Map {
 	public static final int MONSTER_MAX_HP = 60;

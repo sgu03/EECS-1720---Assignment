@@ -1,6 +1,6 @@
-package rooms;
+package model.rooms;
 
-import characters.Monster;
+import model.characters.Monster;
 
 public class MonsterRoom extends Room {
 	private Monster monster;
@@ -18,9 +18,9 @@ public class MonsterRoom extends Room {
 	
 	private int difficultyLevel(int hp) {
 		int difficulty;
-		if (hp <= game.Map.MONSTER_MIN_HP + 10) {
+		if (hp <= model.game.Map.MONSTER_MIN_HP + 10) {
 			difficulty = 1;
-		} else if (hp <= game.Map.MONSTER_MIN_HP + 20) {
+		} else if (hp <= model.game.Map.MONSTER_MIN_HP + 20) {
 			difficulty = 2;
 		} else {
 			difficulty = 3;

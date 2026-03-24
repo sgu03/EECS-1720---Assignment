@@ -1,7 +1,8 @@
-package rooms;
+package model.rooms;
 
 import java.util.Random;
-import characters.Player;
+
+import model.characters.Player;
 
 public class EventRoom extends Room {
 	private int type;

@@ -1,4 +1,4 @@
-package items;
+package model.items;
 
 public class Item {
 

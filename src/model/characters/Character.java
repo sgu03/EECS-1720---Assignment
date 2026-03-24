@@ -1,7 +1,8 @@
-package characters;
+package model.characters;
 
 import java.util.Random;
-import game.*;
+
+import model.game.*;
 
 public abstract class Character {
 	protected int hp;
