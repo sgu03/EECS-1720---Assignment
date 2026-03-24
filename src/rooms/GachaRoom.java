@@ -3,11 +3,7 @@ package rooms;
 public class GachaRoom extends Room {
 	public GachaRoom() {
 		isClear = true;
-	}
-	
-	// enter gacha room
-	public void enter() {
-		// start gacha system
+		name = "Gacha";
 	}
 	
 	public String toString() {

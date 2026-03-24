@@ -48,6 +48,10 @@ public class Map {
 		return monsterCount;
 	}
 	
+	public GachaRoom getGachaRoom() {
+		return gachaRoom;
+	}
+	
 	public void updateAvailableRooms() {
 		availableRooms.clear();
 		for (MonsterRoom m : monsterRooms) {

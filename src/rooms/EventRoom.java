@@ -5,7 +5,6 @@ import characters.Player;
 
 public class EventRoom extends Room {
 	private int type;
-	private String name;
 	
 	private Random random = new Random();
 	
