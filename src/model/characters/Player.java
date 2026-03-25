@@ -16,8 +16,8 @@ public class Player extends Character {
 		backpack = new Backpack();
 	}
 	
-	public ArrayList<Item> getBackpack() {
-		return backpack.getItemList();
+	public Backpack getBackpack() {
+		return backpack;
 	}
 	
 	public int getGachaTickets() {
