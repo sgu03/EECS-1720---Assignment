@@ -1,7 +1,7 @@
 package model.items;
 
 import model.characters.Player;
-import model.characters.Monsters;
+import model.characters.Monster;
 
 public class PotionItem extends Item {
 

@@ -251,7 +251,8 @@ public class Game {
 		if (monster.getHp() <= 0) {
 			mRoom.clear();
 			monstersLeft--;
-			actionMsg += "\nDefeat Monster!";
+			player.gainGachaTickets(mRoom.getLevel());
+			actionMsg += "\nDefeat Monster! You gain " + mRoom.getLevel() + " gacha tickets!";
 			return true;
 		} else {
 			return false;

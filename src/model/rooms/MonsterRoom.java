@@ -16,6 +16,10 @@ public class MonsterRoom extends Room {
 		return monster;
 	}
 	
+	public int getLevel() {
+		return level;
+	}
+	
 	private int difficultyLevel(int hp) {
 		int difficulty;
 		if (hp <= model.game.Map.MONSTER_MIN_HP + 10) {
