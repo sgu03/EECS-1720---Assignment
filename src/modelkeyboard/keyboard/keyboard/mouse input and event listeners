@@ -1,0 +1,95 @@
+package controller;
+
+import java.awt.event.*;
+
+import model.game.Game;
+
+public class GameController implements ActionListener, KeyListener {
+
+    private Game game;
+
+    public GameController(Game game) {
+        this.game = game;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        String cmd = e.getActionCommand();
+
+        switch (cmd) {
+            case "GACHA":
+                game.pullGacha();
+                break;
+
+            case "ROOM1":
+                game.chooseNextRoom(1);
+                break;
+
+            case "ROOM2":
+                game.chooseNextRoom(2);
+                break;
+
+            case "ROOM3":
+                game.chooseNextRoom(3);
+                break;
+
+            case "ATTACK":
+                game.normalAttackMonster();
+                break;
+
+            case "DODGE":
+                game.dodgeMonsterAttack();
+                break;
+
+            case "ITEM":
+                game.useItem(0);
+                break;
+        }
+
+        game.updateGameStatus();
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+        switch (e.getKeyCode()) {
+
+            case KeyEvent.VK_1:
+                game.chooseNextRoom(1);
+                break;
+
+            case KeyEvent.VK_2:
+                game.chooseNextRoom(2);
+                break;
+
+            case KeyEvent.VK_3:
+                game.chooseNextRoom(3);
+                break;
+
+            case KeyEvent.VK_A:
+                game.normalAttackMonster();
+                break;
+
+            case KeyEvent.VK_D:
+                game.dodgeMonsterAttack();
+                break;
+
+            case KeyEvent.VK_G:
+                game.pullGacha();
+                break;
+
+            case KeyEvent.VK_I:
+                game.useItem(0);
+                break;
+        }
+
+        game.updateGameStatus();
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+}
