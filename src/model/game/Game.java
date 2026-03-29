@@ -21,6 +21,9 @@ public class Game {
 	private boolean lose;
 	private boolean win;
 	
+	private Item pendingItem;	// newly pulled item that cannot be added yet
+	private boolean waitingForDiscard;	// waiting for user to choose which item to discard
+	
 	public Game(int monsterCount) {
 		player = new Player(PLAYER_HP);
 		map = new Map(monsterCount);
@@ -28,6 +31,7 @@ public class Game {
 		inBattle = false;
 		lose = false;
 		win = false;
+		waitingForDiscard = false;
 	}
 	
 	public Player getPlayer() {
@@ -50,6 +54,10 @@ public class Game {
 		return actionMsg;
 	}
 	
+	public Item getPendingItem() {
+		return pendingItem;
+	}
+	
 	public boolean isInBattle() {
 		return inBattle;
 	}
@@ -64,6 +72,10 @@ public class Game {
 	
 	public boolean isWin() {
 		return win;
+	}
+	
+	public boolean isWaitingForDiscard() {
+		return waitingForDiscard;
 	}
 	
 	// method to be called every time hp is changed
@@ -91,6 +103,8 @@ public class Game {
 		if (lose || win) return;
 		inGacha = true;
 		inBattle = false;
+		waitingForDiscard = false;
+		pendingItem = null;
 		currentRoom = map.getGachaRoom();	
 		nextRoomList = map.newNextRoomList();
 		actionMsg = "Entered Gacha Room.";
@@ -98,15 +112,52 @@ public class Game {
 	
 	// when pull gacha button is pressed
 	public void pullGacha() {
+		if (!inGacha || waitingForDiscard) return;
+		GachaRoom gRoom = (GachaRoom) currentRoom;
+		Item item = gRoom.gachaPull(player);
+		if (item == null) {
+			actionMsg = "Not enough gacha tickets!";
+			return;
+		} else if (player.getBackpack().isFull()) {
+			pendingItem = item;
+			waitingForDiscard = true;
+			actionMsg = "You pulled " + item.getName() + " but your backpack is full!";
+			actionMsg += "\nPlease choose an item to discard.";
+		} else {
+			player.getBackpack().addItem(item);
+			actionMsg = "You pulled " + item.getName() + "!";
+		}
+	}
+	
+	// when player decides which item to discard
+	public void discardItem(int index) {
+		if (!inGacha || !waitingForDiscard || pendingItem == null) return;
+		Backpack backpack = player.getBackpack();
 		
+		if (index < 0 || index > backpack.size()) {
+			actionMsg = "Invalid item choice.";
+			return;
+		}
+
+		// if index = backpack.size(), it means player wants to discard the newly pulled item
+		if (index == backpack.size()) {
+			actionMsg = "Discarded " + pendingItem.getName() + ".";
+		} else {	
+			// player wants to remove an item from backpack
+			actionMsg = "Removed " + backpack.getItem(index).getName() + " and added " + pendingItem.getName() + ".";
+			backpack.removeItem(index);
+			backpack.addItem(pendingItem);
+		}
+		pendingItem = null;
+		waitingForDiscard = false;
 	}
 	
 	public void chooseNextRoom(int index) {
-		if (nextRoomList == null || index < 1 || index > nextRoomList.size()) {
+		if (nextRoomList == null || index < 0 || index >= nextRoomList.size()) {
 			actionMsg += "\nInvalid room choice. Please choose again.";
 			return;
 		}
-		currentRoom = nextRoomList.get(index-1);
+		currentRoom = nextRoomList.get(index);
 		inGacha = false;
 		enterRoom(currentRoom);
 	}
@@ -131,7 +182,7 @@ public class Game {
 		if (!(currentRoom instanceof MonsterRoom)) return;
 		MonsterRoom mRoom = (MonsterRoom) currentRoom;
 		Monster monster = mRoom.getMonster();
-		if (player.getBackpack().isEmpty()) {
+		if (player.getBackpack().getItemList().isEmpty()) {
 			actionMsg += "\nYou don't have any item!";
 			return;
 		} else { 
@@ -200,7 +251,8 @@ public class Game {
 		if (monster.getHp() <= 0) {
 			mRoom.clear();
 			monstersLeft--;
-			actionMsg += "\nDefeat Monster!";
+			player.gainGachaTickets(mRoom.getLevel());
+			actionMsg += "\nDefeat Monster! You gain " + mRoom.getLevel() + " gacha tickets!";
 			return true;
 		} else {
 			return false;
