@@ -133,7 +133,7 @@ public class GameFrame extends JFrame {
 		playerHpLabel.setText("Player HP: " + game.getPlayer().getHp());
 		ticketLabel.setText("Tickets: " + game.getPlayer().getGachaTickets());
 		monstersLeftLabel.setText("Monsters Left: " + game.getMonstersLeft());
-		currentRoomLabel.setText("Current Room: " + game.getCurrentRoomLabel());
+		currentRoomLabel.setText("Current Room: " + game.getCurrentRoom().toString());
 		actionArea.setText(game.getActionMsg());
 
 		if (game.getCurrentRoom() instanceof MonsterRoom) {
