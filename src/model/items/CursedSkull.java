@@ -5,4 +5,20 @@ import model.characters.Monster;
 
 public class CursedSkull extends Item {
 
+	public InstantDeathItem(String name) {
+		super(name);
+	}
+
+
+	//instantly kills the player
+
+	@Override
+	public void use(Player player, Monster monster) {
+		if (player == null) {
+			return;
+		}
+
+		player.damage(player.getHp()); //player is super dead
+	}
+
 }

@@ -6,15 +6,18 @@ import model.game.*;
 
 public abstract class Character {
 	protected int hp;
+	protected int maxHp;
 	protected double attackChance;
 	protected double dodgeChance;
 	protected boolean attackSuccess;
 	protected boolean dodgeSuccess;
+
 	
 	private Random random = new Random();
 	
 	public Character(int hp) {
 		this.hp = hp;
+		this.maxHp = hp;
 		attackSuccess = false;
 		dodgeSuccess = false;
 	}
@@ -40,6 +43,9 @@ public abstract class Character {
 	
 	public void heal(int heal) {
 		hp += heal;
+		if (hp >= maxHp) {
+			hp = maxHp;
+		}
 	}
 
 	public boolean attack() {

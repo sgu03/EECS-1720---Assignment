@@ -5,8 +5,6 @@ import java.util.Random;
 import model.characters.Player;
 import model.items.*;
 
-
-
 public class GachaRoom extends Room {
 
 	private Random rand = new Random();
@@ -80,13 +78,13 @@ public class GachaRoom extends Room {
 			}
 		}
 		else if (roll < 95) {
-			return new SupportItem("Lucky Charm");
+			return new LuckyCharm("Lucky Charm");
 		}
 		else { 
 			if (rand.nextBoolean()) {
-				return new InstantKillItem("Instant Kill Sword");
+				return new InstantKillSword("Instant Kill Sword");
 			} else {
-				return new InstantDeathItem("Cursed Skull");
+				return new CursedSkull("Cursed Skull");
 
 			}
 
