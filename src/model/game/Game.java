@@ -11,6 +11,7 @@ public class Game {
 	
 	private Player player;
 	private Map map;
+	private int monsterCount;
 	private int monstersLeft;
 	private ArrayList<Room> nextRoomList;
 	private Room currentRoom;
@@ -27,6 +28,7 @@ public class Game {
 	public Game(int monsterCount) {
 		player = new Player(PLAYER_HP);
 		map = new Map(monsterCount);
+		this.monsterCount = monsterCount;
 		monstersLeft = monsterCount;
 		inBattle = false;
 		lose = false;
@@ -36,6 +38,15 @@ public class Game {
 	
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public int getMonsterCount() {
+		return monsterCount;
+	}
+	
+	public void setMonsterCount(int monsterCount) {
+		this.monsterCount = monsterCount;
+		this.monstersLeft = monsterCount;
 	}
 	
 	public int getMonstersLeft() {

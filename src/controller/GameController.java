@@ -6,15 +6,21 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import model.game.Game;
-import view.GameFrame;
+import view.*;
 
 public class GameController implements ActionListener, KeyListener {
 	private final Game game;
-	private final GameFrame view;
+	private GameFrame view;
+	private StartFrame startView;
 
 	public GameController(Game game, GameFrame view) {
 		this.game = game;
 		this.view = view;
+	}
+	
+	public GameController(Game game, StartFrame startView) {
+		this.game = game;
+		this.startView = startView;
 	}
 
 	@Override
@@ -66,6 +72,13 @@ public class GameController implements ActionListener, KeyListener {
 	private void handleCommand(String command) {
 		if (command == null || game.isGameOver() || game.isWin()) {
 			view.refresh();
+			return;
+		}
+		
+		if (command.equals("START")) {
+			game.setMonsterCount(startView.getDifficulty());
+			this.view = new GameFrame(game);
+			startView.setVisible(false);
 			return;
 		}
 
