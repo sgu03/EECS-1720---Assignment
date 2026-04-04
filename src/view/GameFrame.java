@@ -117,6 +117,8 @@ public class GameFrame extends JFrame {
 
 		addKeyListener(controller);
 		setFocusable(true);
+		
+		this.setVisible(true);
 		refresh();
 	}
 
@@ -166,6 +168,7 @@ public class GameFrame extends JFrame {
 			boolean hasItem = i < backpack.size();
 			itemButtons[i].setEnabled(hasItem && game.isInBattle());
 			itemButtons[i].setText(hasItem ? shortcutLabel(i, backpack.getItem(i)) : shortcutLabel(i, null));
+			itemButtons[i].setToolTipText(hasItem ? backpack.getItem(i).getMsg() : "Empty");
 		}
 	}
 
@@ -191,7 +194,24 @@ public class GameFrame extends JFrame {
 	}
 
 	private String shortcutLabel(int index, Item item) {
-		char key = (char) ('Q' + index);
+		char key;
+		switch (index) {
+			case 0:
+				key = 'Q';
+				break;
+			case 1:
+				key = 'W';
+				break;
+			case 2:
+				key = 'E';
+				break;
+			case 3:
+				key = 'R';
+				break;
+			default:
+				key = 'T';
+				break;
+		}
 		if (item == null) {
 			return key + ": Empty";
 		}

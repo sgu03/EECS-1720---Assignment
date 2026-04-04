@@ -5,8 +5,9 @@ import model.characters.Monster;
 
 public class CursedSkull extends Item {
 
-	public InstantDeathItem(String name) {
+	public CursedSkull(String name) {
 		super(name);
+		this.msg = "You are cursed and instantly killed! Bye!";
 	}
 
 

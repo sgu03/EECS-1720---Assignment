@@ -107,7 +107,7 @@ public class Game {
 		pendingItem = null;
 		currentRoom = map.getGachaRoom();	
 		nextRoomList = map.newNextRoomList();
-		actionMsg = "Entered Gacha Room.";
+		actionMsg += "\n\nEntered Gacha Room.";
 	}
 	
 	// when pull gacha button is pressed
@@ -116,16 +116,16 @@ public class Game {
 		GachaRoom gRoom = (GachaRoom) currentRoom;
 		Item item = gRoom.gachaPull(player);
 		if (item == null) {
-			actionMsg = "Not enough gacha tickets!";
+			actionMsg += "\nNot enough gacha tickets!";
 			return;
 		} else if (player.getBackpack().isFull()) {
 			pendingItem = item;
 			waitingForDiscard = true;
-			actionMsg = "You pulled " + item.getName() + " but your backpack is full!";
+			actionMsg += "\nYou pulled " + item.getName() + " but your backpack is full!";
 			actionMsg += "\nPlease choose an item to discard.";
 		} else {
 			player.getBackpack().addItem(item);
-			actionMsg = "You pulled " + item.getName() + "!";
+			actionMsg += "\nYou pulled " + item.getName() + "!";
 		}
 	}
 	
@@ -135,16 +135,16 @@ public class Game {
 		Backpack backpack = player.getBackpack();
 		
 		if (index < 0 || index > backpack.size()) {
-			actionMsg = "Invalid item choice.";
+			actionMsg += "\nInvalid item choice.";
 			return;
 		}
 
 		// if index = backpack.size(), it means player wants to discard the newly pulled item
 		if (index == backpack.size()) {
-			actionMsg = "Discarded " + pendingItem.getName() + ".";
+			actionMsg += "\nDiscarded " + pendingItem.getName() + ".";
 		} else {	
 			// player wants to remove an item from backpack
-			actionMsg = "Removed " + backpack.getItem(index).getName() + " and added " + pendingItem.getName() + ".";
+			actionMsg += "\nRemoved " + backpack.getItem(index).getName() + " and added " + pendingItem.getName() + ".";
 			backpack.removeItem(index);
 			backpack.addItem(pendingItem);
 		}
@@ -166,10 +166,10 @@ public class Game {
 	public void enterRoom(Room room) {
 		if (room instanceof MonsterRoom) {
 			inBattle = true;
-			actionMsg = "Entered Monster Room.\n[Your Turn]";
+			actionMsg += "\n\nEntered Monster Room.\n[Your Turn]";
 		} else if (room instanceof EventRoom) {
 			EventRoom eRoom = (EventRoom) room;
-			actionMsg = "Entered " + eRoom.getName() + " Room.\n";
+			actionMsg += "\n\nEntered " + eRoom.getName() + " Room.\n";
 			actionMsg += eRoom.applyEvent(player);
 			eRoom.clear();
 			updateGameStatus();
@@ -182,12 +182,21 @@ public class Game {
 		if (!(currentRoom instanceof MonsterRoom)) return;
 		MonsterRoom mRoom = (MonsterRoom) currentRoom;
 		Monster monster = mRoom.getMonster();
-		if (player.getBackpack().getItemList().isEmpty()) {
+		Backpack bp = player.getBackpack();
+		if (bp.getItemList().isEmpty()) {
 			actionMsg += "\nYou don't have any item!";
 			return;
 		} else { 
 			// use an item and remove it from backpack
-			// actionMsg = "You used a xxx item!";
+			Item item = bp.getItem(index);
+			if (item == null) {
+				actionMsg += "\nThis is an empty item slot!";
+				return;
+			}
+			item.use(player, monster);
+			player.getBackpack().removeItem(index);
+			actionMsg += "\nYou used a " + item.getName() + "!";
+			actionMsg += "\n" + item.getMsg();
 		}
 		if (!checkMonsterDefeated()) {
 			monsterTurn(false);
@@ -206,7 +215,7 @@ public class Game {
 			monster.damage(5);
 			actionMsg += "\nAttack successful! [Monster -5 HP]";
 		} else {
-			actionMsg = "\nAttack failed!";
+			actionMsg += "\nAttack failed!";
 		}
 		if (!checkMonsterDefeated()) {
 			monsterTurn(false);
@@ -224,7 +233,7 @@ public class Game {
 	
 	private void monsterTurn(boolean isDodge) {
 		if (!(currentRoom instanceof MonsterRoom)) return;
-		actionMsg = "[Monster Turn]";
+		actionMsg += "\n\n[Monster Turn]";
 		MonsterRoom mRoom = (MonsterRoom) currentRoom;
 		Monster monster = mRoom.getMonster();
 		if (isDodge) {
@@ -242,6 +251,9 @@ public class Game {
 		} else {
 			actionMsg += "\nMonster attack failed!";
 		}
+		if (!lose && !win) {
+			actionMsg += "\n\n[Your Turn]";
+		}
 	}
 	
 	public boolean checkMonsterDefeated() {
@@ -251,7 +263,7 @@ public class Game {
 		if (monster.getHp() <= 0) {
 			mRoom.clear();
 			monstersLeft--;
-			player.gainGachaTickets(mRoom.getLevel());
+			player.gainGachaTickets(mRoom.getLevel()*2);
 			actionMsg += "\nDefeat Monster! You gain " + mRoom.getLevel() + " gacha tickets!";
 			return true;
 		} else {

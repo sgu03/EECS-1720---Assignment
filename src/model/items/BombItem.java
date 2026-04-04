@@ -10,6 +10,7 @@ public class BombItem extends Item {
 	public BombItem(String name, int damage) {
 		super(name);
 		this.damage = damage;
+		this.msg = "Monster -" + damage + " HP";
 	}
 
 	//Bomb does damage to monsters

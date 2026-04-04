@@ -6,6 +6,7 @@ import model.characters.Monster;
 
 public abstract class Item {
 	protected String name;
+	protected String msg;
 
 	public Item(String name) {
 		this.name = name;
@@ -16,6 +17,10 @@ public abstract class Item {
 	public String getName() {
 		return name;
 
+	}
+	
+	public String getMsg() {
+		return msg;
 	}
 
 	//use Item

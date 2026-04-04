@@ -7,6 +7,7 @@ public class LuckyCharm extends Item {
 	
 	public LuckyCharm(String name){
 		super(name);
+		this.msg = "You will successfully dodge the monster's next attack!";
 	}
 
 	@Override

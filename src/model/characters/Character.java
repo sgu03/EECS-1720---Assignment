@@ -17,7 +17,7 @@ public abstract class Character {
 	
 	public Character(int hp) {
 		this.hp = hp;
-		this.maxHp = hp;
+		this.maxHp = 100;
 		attackSuccess = false;
 		dodgeSuccess = false;
 	}

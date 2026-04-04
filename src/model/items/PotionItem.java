@@ -12,6 +12,11 @@ public class PotionItem extends Item {
   public PotionItem(String name, int hpChange) {
 	  super(name);
 	  this.hpChange = hpChange;
+	  if (hpChange > 0) {
+		  this.msg = "Player +" + hpChange + " HP";
+	  } else {
+		  this.msg = "Player -" + hpChange + " HP";
+	  }
   }
 
   // Potion affects only effects Player
@@ -22,7 +27,7 @@ public class PotionItem extends Item {
 	  if (player == null) { 
 		  return;
 	  }
-	  player.changeHp(hpChange);
+	  player.changeHP(hpChange);
 
 	  
   }

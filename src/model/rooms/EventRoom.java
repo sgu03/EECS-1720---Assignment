@@ -16,12 +16,14 @@ public class EventRoom extends Room {
 				name = "Trap";
 				break;
 			case 1:
+			case 2:
 				name = "Healing Fountain";
 				break;
-			case 2:
+			case 3:
 				name = "Curse";
 				break;
-			case 3:
+			case 4:
+			case 5:
 				name = "Treasure";
 				break;
 		}
@@ -37,12 +39,14 @@ public class EventRoom extends Room {
 				player.damage(5);
 				return "Your HP -5";
 			case 1:
+			case 2:
 				player.heal(10);
 				return "Your HP +10";
-			case 2:
+			case 3:
 				player.curse(0.2);
 				return "Next Dodge Chance -20%";
-			case 3:
+			case 4:
+			case 5:
 				int num = random.nextInt(1, 5);
 				player.gainGachaTickets(num);
 				return "Gain " + num + " gacha tickets!";

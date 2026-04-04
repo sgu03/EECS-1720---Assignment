@@ -8,7 +8,7 @@ public class Player extends Character {
 	private int gachaTickets;
 	private Backpack backpack;
 	private int shield;
-	private boolean nextDodgeGuranteed = false;
+	private boolean nextDodgeGuaranteed = false;
 	
 	
 	public Player(int hp) {

@@ -34,7 +34,7 @@ public class Map {
 		// Create random EventRooms
 		eventRooms = new EventRoom[monsterCount*2];
 		for (int i = 0; i < eventRooms.length; i++) {
-			eventRooms[i] = new EventRoom(random.nextInt(0, 4));
+			eventRooms[i] = new EventRoom(random.nextInt(0, 6));
 		}
 		
 		// Initialize next room list

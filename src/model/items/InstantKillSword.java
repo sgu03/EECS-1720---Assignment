@@ -7,6 +7,7 @@ public class InstantKillSword extends Item {
 
 	public InstantKillSword(String name) {
 		super(name);
+		this.msg = "You can instantly kill the monster!";
 	}
 
 	//instantly kills the Monster
