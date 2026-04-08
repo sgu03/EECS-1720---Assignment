@@ -10,6 +10,7 @@ public class EventRoom extends Room {
 	private Random random = new Random();
 	
 	public EventRoom(int type) {
+		isClear = false;
 		this.type = type;
 		switch (type) {
 			case 0:

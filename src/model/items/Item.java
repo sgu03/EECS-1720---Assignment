@@ -10,7 +10,7 @@ public abstract class Item {
 
 	public Item(String name) {
 		this.name = name;
-
+		this.msg = "";
 	}
 
 

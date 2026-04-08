@@ -8,16 +8,17 @@ public class Player extends Character {
 	private int gachaTickets;
 	private Backpack backpack;
 	private int shield;
-	private boolean nextDodgeGuaranteed = false;
+	private boolean nextDodgeGuaranteed;
 	
 	
 	public Player(int hp) {
 		super(hp);
-		gachaTickets = 5;
 		attackChance = 0.6;
 		dodgeChance = 0.8;
-		shield = 0;
+		gachaTickets = 5;
 		backpack = new Backpack();
+		shield = 0;
+		nextDodgeGuaranteed = false;
 	}
 
 	public int getShield() {

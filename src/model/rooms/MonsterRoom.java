@@ -7,6 +7,7 @@ public class MonsterRoom extends Room {
 	private int level;
 	
 	public MonsterRoom(Monster monster) {
+		isClear = false;
 		this.monster = monster;
 		this.level = difficultyLevel(monster.getHp());
 		name = "Monster";

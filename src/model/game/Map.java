@@ -11,7 +11,7 @@ public class Map {
 
 	private Random random = new Random();
 	
-	public GachaRoom gachaRoom;
+	private GachaRoom gachaRoom;
 	private int monsterCount;
 	private MonsterRoom[] monsterRooms;
 	private EventRoom[] eventRooms;

@@ -30,9 +30,14 @@ public class Game {
 		map = new Map(monsterCount);
 		this.monsterCount = monsterCount;
 		monstersLeft = monsterCount;
+		nextRoomList = new ArrayList<Room>();
+		currentRoom = null;
+		actionMsg = "";
 		inBattle = false;
+		inGacha = false;
 		lose = false;
 		win = false;
+		pendingItem = null;
 		waitingForDiscard = false;
 	}
 	

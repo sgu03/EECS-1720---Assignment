@@ -20,6 +20,8 @@ public abstract class Character {
 		this.maxHp = 100;
 		attackSuccess = false;
 		dodgeSuccess = false;
+		attackChance = 0.5;
+		dodgeChance = 0.5;
 	}
 	
 	public int getHp() {
