@@ -111,7 +111,7 @@ public class Game {
 	}
 	
 	public void startGame() {
-		actionMsg = "Welcome to Dungeon Gacha Adventure Game!";
+		actionMsg = "\nWelcome to Dungeon Gacha Adventure Game!";
 		enterGachaRoom();
 	}
 	

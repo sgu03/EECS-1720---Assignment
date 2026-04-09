@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.border.TitledBorder;
 
 import controller.GameController;
 import model.game.Game;
@@ -74,9 +75,12 @@ public class GameFrame extends JFrame {
 		actionArea.setWrapStyleWord(true);
 		actionArea.setOpaque(false);
 		actionArea.setForeground(new Color(235, 255, 220));
+		actionArea.setFont(new Font("Serif", Font.PLAIN, 15));
 		
 		JScrollPane scrollPane = new JScrollPane(actionArea);
-		scrollPane.setBorder(BorderFactory.createTitledBorder("Game Log"));
+		TitledBorder gameLogBorder = BorderFactory.createTitledBorder("Game Log");
+		gameLogBorder.setTitleColor(new Color(235, 255, 220));
+		scrollPane.setBorder(gameLogBorder);
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
 		scrollPane.getVerticalScrollBar().setOpaque(false);
