@@ -1,12 +1,11 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,8 +17,7 @@ import controller.GameController;
 import model.game.Game;
 import model.items.Backpack;
 import model.items.Item;
-import model.rooms.MonsterRoom;
-import model.rooms.Room;
+import model.rooms.*;
 
 public class GameFrame extends JFrame {
 	private final Game game;
@@ -38,6 +36,11 @@ public class GameFrame extends JFrame {
 	private final JButton[] roomButtons;
 	private final JButton[] itemButtons;
 	private final JPanel discardPanel;
+	
+	private BackgroundPanel gameLogPanel;	
+	private ImageIcon gachaRoomBG = new ImageIcon(getClass().getResource("/images/gatchaRoom.png"));
+	private ImageIcon monsterRoomBG = new ImageIcon(getClass().getResource("/images/monsterRoom.png"));
+	private ImageIcon eventRoomBG = new ImageIcon(getClass().getResource("/images/eventRoom.jpg"));
 
 	public GameFrame(Game game) {
 		super("Dungeon Gacha Adventure");
@@ -45,7 +48,7 @@ public class GameFrame extends JFrame {
 		this.controller = new GameController(game, this);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(new Dimension(920, 620));
+		setSize(new Dimension(1920, 1090));
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout(10, 10));
 
@@ -69,9 +72,21 @@ public class GameFrame extends JFrame {
 		actionArea.setEditable(false);
 		actionArea.setLineWrap(true);
 		actionArea.setWrapStyleWord(true);
+		actionArea.setOpaque(false);
+		actionArea.setForeground(new Color(235, 255, 220));
+		
 		JScrollPane scrollPane = new JScrollPane(actionArea);
 		scrollPane.setBorder(BorderFactory.createTitledBorder("Game Log"));
-		add(scrollPane, BorderLayout.CENTER);
+		scrollPane.setOpaque(false);
+		scrollPane.getViewport().setOpaque(false);
+		scrollPane.getVerticalScrollBar().setOpaque(false);
+		scrollPane.getHorizontalScrollBar().setOpaque(false);
+		
+		gameLogPanel = new BackgroundPanel(gachaRoomBG);
+		gameLogPanel.setLayout(new BorderLayout());
+		gameLogPanel.add(scrollPane, BorderLayout.CENTER);
+		
+		add(gameLogPanel, BorderLayout.CENTER);
 
 		JPanel controlsPanel = new JPanel();
 		controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.Y_AXIS));
@@ -141,8 +156,14 @@ public class GameFrame extends JFrame {
 		if (game.getCurrentRoom() instanceof MonsterRoom) {
 			MonsterRoom monsterRoom = (MonsterRoom) game.getCurrentRoom();
 			monsterHpLabel.setText("Monster HP: " + monsterRoom.getMonster().getHp());
+			gameLogPanel.setBackground(monsterRoomBG);
+		} else if (game.getCurrentRoom() instanceof EventRoom) {
+			monsterHpLabel.setText("Monster HP: N/A");
+			gameLogPanel.setBackground(eventRoomBG);
+			gameLogPanel.repaint();
 		} else {
 			monsterHpLabel.setText("Monster HP: N/A");
+			gameLogPanel.setBackground(gachaRoomBG);
 		}
 
 		ArrayList<Room> rooms = game.getNextRoomList();
@@ -216,5 +237,26 @@ public class GameFrame extends JFrame {
 			return key + ": Empty";
 		}
 		return key + ": " + item.getName();
+	}
+	
+	private class BackgroundPanel extends JPanel {
+		private ImageIcon background;
+		
+		public BackgroundPanel(ImageIcon background) {
+			this.background = background;
+			setOpaque(true);
+		}
+		
+		public void setBackground(ImageIcon background) {
+			this.background = background;
+		}
+		
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), this);
+			g2d.setColor(new Color(0, 0, 0, 90));	// overlay color
+			g2d.fillRect(0, 0, getWidth(), getHeight());
+		}
 	}
 }

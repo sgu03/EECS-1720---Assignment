@@ -4,8 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.Timer;
 
 import model.game.Game;
+import model.rooms.EventRoom;
 import view.*;
 
 public class GameController implements ActionListener, KeyListener {
@@ -90,6 +92,21 @@ public class GameController implements ActionListener, KeyListener {
 			game.dodgeMonsterAttack();
 		} else if (command.startsWith("ROOM")) {
 			game.chooseNextRoom(Integer.parseInt(command.substring(4)));
+			if (game.getCurrentRoom() instanceof EventRoom) {
+				view.refresh();
+				Timer timer = new Timer(1500, new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						game.updateGameStatus();				
+						if (!game.isGameOver() && !game.isWin()) {
+							game.enterGachaRoom();
+						}
+						view.refresh();
+					}
+				});
+				timer.setRepeats(false);
+				timer.start();
+				return;
+			}
 		} else if (command.startsWith("ITEM")) {
 			game.useItem(Integer.parseInt(command.substring(4)));
 		} else if (command.startsWith("DISCARD")) {

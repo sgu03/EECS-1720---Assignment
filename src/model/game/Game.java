@@ -188,8 +188,6 @@ public class Game {
 			actionMsg += "\n\nEntered " + eRoom.getName() + " Room.\n";
 			actionMsg += eRoom.applyEvent(player);
 			eRoom.clear();
-			updateGameStatus();
-			if (!lose && !win) enterGachaRoom();
 		}
 	}
 	
