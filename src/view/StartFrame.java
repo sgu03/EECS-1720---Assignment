@@ -14,7 +14,7 @@ import javax.swing.event.ChangeListener;
 import model.game.Game;
 import controller.GameController;
 
-public class StartFrame extends JFrame implements ChangeListener {
+public class StartFrame extends JFrame {
 	private Game game;
 	private GameController controller;
 	private int difficulty;
@@ -60,6 +60,9 @@ public class StartFrame extends JFrame implements ChangeListener {
 		slider.setPaintTicks(true);
 		slider.setPreferredSize(new Dimension(350, 60));
 		slider.setMaximumSize(new Dimension(350, 60));
+		slider.addChangeListener(controller);
+		slider.setPreferredSize(new Dimension(250, 50));
+		slider.setMaximumSize(new Dimension(300, 50));
 		slider.setAlignmentX(CENTER_ALIGNMENT);
 		
 		level = new JLabel();
@@ -112,11 +115,8 @@ public class StartFrame extends JFrame implements ChangeListener {
 		return difficulty;
 	}
 	
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		if (e.getSource() == slider) {
-			difficulty = slider.getValue();
-			level.setText("You are now choosing dungeon level " + difficulty);
-		}
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
+		level.setText("You are now choosing dungeon level " + difficulty);
 	}
 }
