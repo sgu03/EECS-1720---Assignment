@@ -259,8 +259,18 @@ public class Game {
 				updateGameStatus();
 			}
 		} else if (monster.attack()){
+			int oldShield = player.getShield();
+			int oldHP = player.getHp();
 			player.damage(5);
-			actionMsg += "\nMonster attack successful! [Player -5 HP]";
+			int newShield = player.getShield();
+			int newHP = player.getHp();
+			if (oldShield > newShield && oldHP == newHP) {
+				actionMsg += "\nMonster attack successful! [Shield -" + (oldShield - newShield) + "]";
+			} else if (oldShield > newShield && oldHP > newHP) {
+				actionMsg += "\nMonster attack successful! [Shield -" + (oldShield - newShield) + ", Player -" + (oldHP - newHP) + "]";
+			} else {
+				actionMsg += "\nMonster attack successful! [Player -5 HP]";
+			}
 			updateGameStatus();
 		} else {
 			actionMsg += "\nMonster attack failed!";

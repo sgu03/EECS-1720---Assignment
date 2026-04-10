@@ -59,7 +59,7 @@ public class Player extends Character {
 			heal(amount);
 
 		} else if (amount < 0) {
-			takeDamage(-amount);
+			damage(-amount);
 		}
 	}
 
@@ -69,7 +69,7 @@ public class Player extends Character {
 	}
 
 	//override damage to include shield hp
-	public void takeDamage(int damage) {
+	public void damage(int damage) {
 		if (shield > 0) {
 			if (shield >= damage) {
 				shield -= damage;

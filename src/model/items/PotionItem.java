@@ -15,7 +15,7 @@ public class PotionItem extends Item {
 	  if (hpChange > 0) {
 		  this.msg = "Player +" + hpChange + " HP";
 	  } else {
-		  this.msg = "Player -" + hpChange + " HP";
+		  this.msg = "Player " + hpChange + " HP";
 	  }
   }
 

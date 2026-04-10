@@ -25,7 +25,6 @@ public class GachaRoom extends Room {
 		// changed strategy to only allow one pull each time (instead of multiple pulls)
 		
 		if (player.getGachaTickets() <= 0) { 
-			//System.out.println("Not enough tickets!");
 			return null;
 		}
 		
@@ -36,34 +35,13 @@ public class GachaRoom extends Room {
 		// moved backpack management to game class
 		// -> so player can choose which item to remove when backpack is full
 
-		/*for (int i = 0; i < pulls; i++) {
-			player.useGachaTickets();
-
-			Item item = generateRandomItem();
-
-			//System.out.println("Pulled: " + item.getName());
-			
-			Backpack backpack = player.getBackpack();
-
-			//if backpack is full
-			if (backpack.isFull()) {
-			System.out.println("Backpack is full!");
-
-			backpack.printBackpack();
-
-			//removes first item to put in new item (might change gimmick later)
-			System.out.println("First item removed to make space...");
-			backpack.removeItem(0);
-			}
-			backpack.addItem(item);
-		}*/
 	}
 
 	//gacha probabilities
 	private Item generateRandomItem() {
 		int roll = rand.nextInt(100);
 		
-		if (roll < 60) {
+		if (roll < 45) {
 			if (rand.nextBoolean()) {
 				return new PotionItem("Healing Potion", 10);
 			} else {
