@@ -361,7 +361,7 @@ public class GameFrame extends JFrame {
 		} else if (item instanceof PotionItem) {
 			showDisplay(potionImage, item.getMsg());
 		} else if (item instanceof ShieldItem) {
-			showDisplay(potionImage, item.getMsg());
+			showDisplay(shieldImage, item.getMsg());
 		}
 	}
 	
