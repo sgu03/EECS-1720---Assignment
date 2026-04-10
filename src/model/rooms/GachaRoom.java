@@ -29,7 +29,7 @@ public class GachaRoom extends Room {
 		}
 		
 		player.useGachaTickets();
-		Item pulledItem = generateRandomItem();
+		Item pulledItem = generateRandomItem(player.getIsLucky());
 		return pulledItem;
 		
 		// moved backpack management to game class
@@ -38,11 +38,11 @@ public class GachaRoom extends Room {
 	}
 
 	//gacha probabilities
-	private Item generateRandomItem() {
+	private Item generateRandomItem(boolean isLucky) {
 		int roll = rand.nextInt(100);
 		
 		if (roll < 45) {
-			if (rand.nextBoolean()) {
+			if (rand.nextBoolean() || isLucky) {
 				return new PotionItem("Healing Potion", 10);
 			} else {
 				return new PotionItem("Poison Potion", -5);
@@ -59,7 +59,7 @@ public class GachaRoom extends Room {
 			return new LuckyCharm("Lucky Charm");
 		}
 		else { 
-			if (rand.nextBoolean()) {
+			if (rand.nextBoolean() || isLucky) {
 				return new InstantKillSword("Instant Kill Sword");
 			} else {
 				return new CursedSkull("Cursed Skull");

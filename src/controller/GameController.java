@@ -13,6 +13,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 
+import model.characters.PlayerType;
 import model.game.Game;
 import model.items.Backpack;
 import model.items.Item;
@@ -90,6 +91,10 @@ public class GameController extends MouseInputAdapter implements ActionListener,
 			game.setMonsterCount(startView.getDifficulty());
 			this.view = new GameFrame(game);
 			startView.setVisible(false);
+			return;
+		} else if (command.equals("PICK")) {
+			game.getPlayer().setPlayerType(PlayerType.valueOf(startView.getPlayerType().toUpperCase()));
+			startView.typeDescription.setText(game.getPlayer().getTypeDescription());
 			return;
 		}
 

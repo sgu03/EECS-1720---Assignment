@@ -226,8 +226,8 @@ public class Game {
 		MonsterRoom mRoom = (MonsterRoom) currentRoom;
 		Monster monster = mRoom.getMonster();
 		if (player.attack()) {
-			monster.damage(5);
-			actionMsg += "\nAttack successful! (Monster -5 HP)";
+			monster.damage(player.getAttack());
+			actionMsg += "\nAttack successful! (Monster -" + player.getAttack() + " HP)";
 		} else {
 			actionMsg += "\nAttack failed!";
 		}

@@ -323,7 +323,8 @@ public class GameFrame extends JFrame {
 	}
 	
 	public void showPlayerDisplay() {
-		String guide = "Defeat all monsters to escape from the Dungeon!";
+		String guide = "Your character: " + game.getPlayer().getPlayerType();
+		guide += "\nDefeat all monsters to escape from the Dungeon!";
 		guide += "\n\n=== How to Play ===";
 		guide += "\n[G] Pull Gacha";
 		guide += "\n[1] [2] [3] Choose a Room";

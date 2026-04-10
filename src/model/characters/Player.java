@@ -5,24 +5,86 @@ import java.util.ArrayList;
 import model.items.*;
 
 public class Player extends Character {
+	private PlayerType type;
+	private String typeDescription;
 	private int gachaTickets;
 	private Backpack backpack;
 	private int shield;
+	private int attack;
 	private boolean nextDodgeGuaranteed;
-	
+	private boolean isLucky;
 	
 	public Player(int hp) {
 		super(hp);
-		attackChance = 0.6;
+		setPlayerType(PlayerType.NORMAL);
+		setTypeDescription();
 		dodgeChance = 0.8;
 		gachaTickets = 5;
 		backpack = new Backpack();
-		shield = 0;
 		nextDodgeGuaranteed = false;
+	}
+	
+	public PlayerType getPlayerType() {
+		return type;
+	}
+	
+	public void setPlayerType(PlayerType type) {
+		this.type = type;
+		switch(type) {
+			case NORMAL:
+				attackChance = 0.6;
+				attack = 5;
+				isLucky = false;
+				hp = 40;
+				shield = 0;
+				break;
+			case WARRIOR:
+				attackChance = 1.0;
+				attack = 8;
+				break;
+			case LUCKY:
+				isLucky = true;	// will only get positive items
+				break;
+			case TANK:
+				hp += 20;
+				break;
+			case ROGUE:
+				shield = 30;
+				break;
+		}
+		setTypeDescription();
+	}
+	
+	private void setTypeDescription() {
+		switch(type) {
+			case NORMAL:
+				typeDescription = "Balanced adventurer";
+				break;
+			case WARRIOR:
+				typeDescription = "Stronger attack";
+				break;
+			case LUCKY:
+				typeDescription = "Positive items only";
+				break;
+			case TANK:
+				typeDescription = "20 extra HP";
+				break;
+			case ROGUE:
+				typeDescription = "30 extra shields";
+				break;
+		}
+	}
+	
+	public String getTypeDescription() {
+		return typeDescription;
 	}
 
 	public int getShield() {
 		return shield;
+	}
+	
+	public int getAttack() {
+		return attack;
 	}
 	
 	@Override
@@ -31,6 +93,10 @@ public class Player extends Character {
 			return 1;
 		}
 		return dodgeChance;
+	}
+	
+	public boolean getIsLucky() {
+		return isLucky;
 	}
 	
 	public Backpack getBackpack() {
@@ -97,7 +163,5 @@ public class Player extends Character {
 		}
 		return super.dodge();
 	}
-
-
 
  }
