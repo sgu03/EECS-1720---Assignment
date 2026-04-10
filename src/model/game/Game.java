@@ -99,10 +99,10 @@ public class Game {
 		if (lose || win) return;
 		if (player.getHp() <= 0) {
 			lose = true;
-			actionMsg += "\nYou die...";
+			actionMsg += "\n\nYou die...";
 		} else if (monstersLeft <= 0) {
 			win = true;
-			actionMsg += "\nAll monsters are defeated! You win!!!";
+			actionMsg += "\n\nAll monsters are defeated! You win!!!";
 		}
 		if (lose || win) {
 		    inBattle = false;
