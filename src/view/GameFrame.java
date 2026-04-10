@@ -57,12 +57,15 @@ public class GameFrame extends JFrame {
 	private ImageIcon playerImage = new ImageIcon(getClass().getResource("/images/player.png"));
 	private ImageIcon potionImage = new ImageIcon(getClass().getResource("/images/potionItem.png"));
 	private ImageIcon shieldImage = new ImageIcon(getClass().getResource("/images/shieldItem.png"));
-	private ImageIcon questionMarkImage = new ImageIcon(getClass().getResource("/images/questionMark.png"));
+	private ImageIcon questionMarkImage = new ImageIcon(getClass().getResource("/images/questionMark1.png"));
 
+	
+	
 	public GameFrame(Game game) {
 		super("Dungeon Gacha Adventure");
 		this.game = game;
 		this.controller = new GameController(game, this);
+		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(900, 800));
