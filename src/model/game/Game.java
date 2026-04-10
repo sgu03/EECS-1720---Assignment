@@ -255,12 +255,12 @@ public class Game {
 				actionMsg += "\nDodge successful!";
 			} else {
 				player.damage(5);
-				actionMsg += "\nDodge failed! [-5 HP]";
+				actionMsg += "\nDodge failed! [Player -5 HP]";
 				updateGameStatus();
 			}
 		} else if (monster.attack()){
 			player.damage(5);
-			actionMsg += "\nMonster attack successful! [-5 HP]";
+			actionMsg += "\nMonster attack successful! [Player -5 HP]";
 			updateGameStatus();
 		} else {
 			actionMsg += "\nMonster attack failed!";

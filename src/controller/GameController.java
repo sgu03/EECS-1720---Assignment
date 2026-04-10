@@ -4,13 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JButton;
 import javax.swing.Timer;
+import javax.swing.event.MouseInputAdapter;
 
 import model.game.Game;
-import model.rooms.EventRoom;
+import model.items.Backpack;
+import model.items.Item;
+import model.rooms.*;
 import view.*;
 
-public class GameController implements ActionListener, KeyListener {
+public class GameController extends MouseInputAdapter implements ActionListener, KeyListener {
 	private final Game game;
 	private GameFrame view;
 	private StartFrame startView;
@@ -94,7 +100,7 @@ public class GameController implements ActionListener, KeyListener {
 			game.chooseNextRoom(Integer.parseInt(command.substring(4)));
 			if (game.getCurrentRoom() instanceof EventRoom) {
 				view.refresh();
-				Timer timer = new Timer(1500, new ActionListener() {
+				Timer timer = new Timer(1000, new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						game.updateGameStatus();				
 						if (!game.isGameOver() && !game.isWin()) {
@@ -122,4 +128,62 @@ public class GameController implements ActionListener, KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {}
+	
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		if (!(e.getSource() instanceof JButton) || view == null) {
+			return;
+		}
+		JButton button = (JButton) e.getSource();
+		String command = button.getActionCommand();
+		if (command == null) {
+			return;
+		}
+		if (command.startsWith("ITEM") || command.startsWith("DISCARD")) {
+			int index;
+			boolean discard;
+			if (command.startsWith("ITEM")) {
+				index = Integer.parseInt(command.substring(4));
+				discard = false;
+			} else {
+				index = Integer.parseInt(command.substring(7));
+				discard = true;
+			}
+			Backpack backpack = game.getPlayer().getBackpack();
+			if (discard && index == backpack.size()) {
+				view.showItemDisplay(game.getPendingItem());
+				return;
+			} else if (index < backpack.size()) {
+				Item item = backpack.getItem(index);
+				if (item != null) {
+					view.showItemDisplay(item);
+					return;
+				}
+			}
+			view.showItemDisplay(null);
+		} else if (command.startsWith("ROOM")) {
+			int index = Integer.parseInt(command.substring(4));
+			if (game.getNextRoomList() != null && index < game.getNextRoomList().size()) {
+				Room room = game.getNextRoomList().get(index);
+				if (room instanceof MonsterRoom) {
+					MonsterRoom mRoom = (MonsterRoom) room;
+					view.showMonsterDisplay(mRoom.getLevel());
+				}
+				else if (room instanceof EventRoom) {
+					view.showEventDisplay();
+				}
+				else {
+					view.showPlayerDisplay();
+				}
+				return;
+			}
+		}
+	}
+	
+	@Override
+	public void mouseExited(MouseEvent e) {
+		if (view != null) {
+			view.showPlayerDisplay();
+		}
+	}
 }

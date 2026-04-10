@@ -56,6 +56,6 @@ public class EventRoom extends Room {
 	}
 	
 	public String toString() {
-		return "Event Room [Random event will occur]";
+		return "Event Room";
 	}
 }

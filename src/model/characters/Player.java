@@ -25,6 +25,14 @@ public class Player extends Character {
 		return shield;
 	}
 	
+	@Override
+	public double getDodgeChance() {
+		if (nextDodgeGuaranteed) {
+			return 1;
+		}
+		return dodgeChance;
+	}
+	
 	public Backpack getBackpack() {
 		return backpack;
 	}

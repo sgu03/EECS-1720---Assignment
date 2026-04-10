@@ -16,8 +16,7 @@ import javax.swing.border.TitledBorder;
 
 import controller.GameController;
 import model.game.Game;
-import model.items.Backpack;
-import model.items.Item;
+import model.items.*;
 import model.rooms.*;
 
 public class GameFrame extends JFrame {
@@ -25,11 +24,13 @@ public class GameFrame extends JFrame {
 	private final GameController controller;
 
 	private final JLabel playerHpLabel;
+	private final JLabel dodgeChanceLabel;
 	private final JLabel ticketLabel;
+	private final JLabel shieldLabel;
 	private final JLabel monsterHpLabel;
 	private final JLabel monstersLeftLabel;
 	private final JLabel currentRoomLabel;
-	private final JLabel hintLabel;
+	private final JLabel monsterLevelLabel;
 	private final JTextArea actionArea;
 	private final JButton gachaButton;
 	private final JButton attackButton;
@@ -42,6 +43,21 @@ public class GameFrame extends JFrame {
 	private ImageIcon gachaRoomBG = new ImageIcon(getClass().getResource("/images/gatchaRoom.png"));
 	private ImageIcon monsterRoomBG = new ImageIcon(getClass().getResource("/images/monsterRoom.png"));
 	private ImageIcon eventRoomBG = new ImageIcon(getClass().getResource("/images/eventRoom.jpg"));
+	
+	private JPanel displayPanel;
+	private JLabel displayImage;
+	private JTextArea displayText;
+	
+	private ImageIcon backpackImage = new ImageIcon(getClass().getResource("/images/backpack0.png"));
+	private ImageIcon bombImage = new ImageIcon(getClass().getResource("/images/bomb.png"));
+	private ImageIcon skullImage = new ImageIcon(getClass().getResource("/images/cursedSkull.png"));
+	private ImageIcon swordImage = new ImageIcon(getClass().getResource("/images/instantKillSword.png"));
+	private ImageIcon luckyCharmImage = new ImageIcon(getClass().getResource("/images/luckyCharm.png"));
+	private ImageIcon monsterImage = new ImageIcon(getClass().getResource("/images/monster.png"));
+	private ImageIcon playerImage = new ImageIcon(getClass().getResource("/images/player.png"));
+	private ImageIcon potionImage = new ImageIcon(getClass().getResource("/images/potionItem.png"));
+	private ImageIcon shieldImage = new ImageIcon(getClass().getResource("/images/shieldItem.png"));
+	private ImageIcon questionMarkImage = new ImageIcon(getClass().getResource("/images/questionMark.png"));
 
 	public GameFrame(Game game) {
 		super("Dungeon Gacha Adventure");
@@ -49,26 +65,48 @@ public class GameFrame extends JFrame {
 		this.controller = new GameController(game, this);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(new Dimension(1920, 1090));
+		setSize(new Dimension(900, 800));
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout(10, 10));
 
-		JPanel infoPanel = new JPanel(new GridLayout(2, 3, 8, 8));
-		infoPanel.setBorder(BorderFactory.createTitledBorder("Status"));
-		playerHpLabel = new JLabel();
-		ticketLabel = new JLabel();
-		monsterHpLabel = new JLabel();
-		monstersLeftLabel = new JLabel();
+		JPanel infoPanel = new JPanel();
+		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.X_AXIS));
+		
+		JPanel dungeonInfoPanel = new JPanel(new GridLayout(2, 1, 2, 0));
+		dungeonInfoPanel.setBorder(BorderFactory.createTitledBorder("Dungeon Status"));
+		dungeonInfoPanel.setPreferredSize(new Dimension(120, 30));
 		currentRoomLabel = new JLabel();
-		hintLabel = new JLabel("Keys: G gacha, 1-3 rooms, A attack, D dodge, Q-T items");
-		infoPanel.add(playerHpLabel);
-		infoPanel.add(ticketLabel);
-		infoPanel.add(monsterHpLabel);
-		infoPanel.add(monstersLeftLabel);
-		infoPanel.add(currentRoomLabel);
-		infoPanel.add(hintLabel);
+		monstersLeftLabel = new JLabel();
+		dungeonInfoPanel.add(currentRoomLabel);
+		dungeonInfoPanel.add(monstersLeftLabel);
+		infoPanel.add(dungeonInfoPanel);
+		
+		JPanel playerInfoPanel = new JPanel(new GridLayout(2, 2, 10, 2));
+		playerInfoPanel.setBorder(BorderFactory.createTitledBorder("Player Status"));
+		playerInfoPanel.setPreferredSize(new Dimension(200, 30));
+		playerHpLabel = new JLabel();
+		dodgeChanceLabel = new JLabel();
+		ticketLabel = new JLabel();
+		shieldLabel = new JLabel();
+		playerInfoPanel.add(playerHpLabel);
+		playerInfoPanel.add(ticketLabel);
+		playerInfoPanel.add(dodgeChanceLabel);
+		playerInfoPanel.add(shieldLabel);
+		infoPanel.add(playerInfoPanel);
+		
+		JPanel monsterInfoPanel = new JPanel(new GridLayout(2, 1, 2, 2));
+		monsterInfoPanel.setBorder(BorderFactory.createTitledBorder("Current Monster Status"));
+		monsterHpLabel = new JLabel();
+		monsterLevelLabel = new JLabel();
+		monsterInfoPanel.add(monsterHpLabel);
+		monsterInfoPanel.add(monsterLevelLabel);
+		infoPanel.add(monsterInfoPanel);
+		
 		add(infoPanel, BorderLayout.NORTH);
 
+		JPanel centerPanel = new JPanel();
+		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.X_AXIS));
+		
 		actionArea = new JTextArea();
 		actionArea.setEditable(false);
 		actionArea.setLineWrap(true);
@@ -87,10 +125,35 @@ public class GameFrame extends JFrame {
 		scrollPane.getHorizontalScrollBar().setOpaque(false);
 		
 		gameLogPanel = new BackgroundPanel(gachaRoomBG);
+		gameLogPanel.setPreferredSize(new Dimension(500, 400));
 		gameLogPanel.setLayout(new BorderLayout());
 		gameLogPanel.add(scrollPane, BorderLayout.CENTER);
+		centerPanel.add(gameLogPanel);
 		
-		add(gameLogPanel, BorderLayout.CENTER);
+		displayPanel = new JPanel();
+		displayPanel.setLayout(new BorderLayout(10, 10));
+		displayPanel.setPreferredSize(new Dimension(300, 400));
+		displayPanel.setBorder(BorderFactory.createTitledBorder("Display"));
+		
+		displayImage = new JLabel();
+		displayImage.setHorizontalAlignment(JLabel.CENTER);
+		displayImage.setPreferredSize(new Dimension(300, 220));
+		displayPanel.add(displayImage, BorderLayout.CENTER);
+		
+		displayText = new JTextArea();
+		displayText.setEditable(false);
+		displayText.setOpaque(false);
+		displayText.setCaretPosition(0);
+		
+		JScrollPane displayScroll = new JScrollPane(displayText);
+		displayScroll.setBorder(BorderFactory.createEmptyBorder());
+		displayScroll.setPreferredSize(new Dimension(300, 180));
+		displayPanel.add(displayScroll, BorderLayout.SOUTH);
+		
+		showPlayerDisplay();
+		centerPanel.add(displayPanel);
+		
+		add(centerPanel, BorderLayout.CENTER);
 
 		JPanel controlsPanel = new JPanel();
 		controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.Y_AXIS));
@@ -98,7 +161,7 @@ public class GameFrame extends JFrame {
 
 		JPanel gachaPanel = new JPanel(new GridLayout(1, 1, 5, 5));
 		gachaPanel.setBorder(BorderFactory.createTitledBorder("Gacha"));
-		gachaButton = buildButton("Pull Gacha (G)", "GACHA");
+		gachaButton = buildButton("(G) Pull Gacha", "GACHA");
 		gachaPanel.add(gachaButton);
 		controlsPanel.add(gachaPanel);
 
@@ -113,8 +176,8 @@ public class GameFrame extends JFrame {
 
 		JPanel battlePanel = new JPanel(new GridLayout(1, 2, 5, 5));
 		battlePanel.setBorder(BorderFactory.createTitledBorder("Battle"));
-		attackButton = buildButton("Attack (A)", "ATTACK");
-		dodgeButton = buildButton("Dodge (D)", "DODGE");
+		attackButton = buildButton("(A) Attack", "ATTACK");
+		dodgeButton = buildButton("(D) Dodge", "DODGE");
 		battlePanel.add(attackButton);
 		battlePanel.add(dodgeButton);
 		controlsPanel.add(battlePanel);
@@ -146,27 +209,33 @@ public class GameFrame extends JFrame {
 		button.setActionCommand(actionCommand);
 		button.addActionListener(controller);
 		button.addKeyListener(controller);
+		button.addMouseListener(controller);
 		button.setFocusable(false);
 		return button;
 	}
 
 	public void refresh() {
 		playerHpLabel.setText("Player HP: " + game.getPlayer().getHp());
-		ticketLabel.setText("Tickets: " + game.getPlayer().getGachaTickets());
+		dodgeChanceLabel.setText("Next Dodge Chance: " + (int)(game.getPlayer().getDodgeChance() * 100) + "%");
+		ticketLabel.setText("Gacha Tickets: " + game.getPlayer().getGachaTickets());
+		shieldLabel.setText("Shield Count:" + game.getPlayer().getShield());
 		monstersLeftLabel.setText("Monsters Left: " + game.getMonstersLeft());
 		currentRoomLabel.setText("Current Room: " + game.getCurrentRoom().toString());
 		actionArea.setText(game.getActionMsg());
+		displayText.setCaretPosition(0);
 
 		if (game.getCurrentRoom() instanceof MonsterRoom) {
 			MonsterRoom monsterRoom = (MonsterRoom) game.getCurrentRoom();
 			monsterHpLabel.setText("Monster HP: " + monsterRoom.getMonster().getHp());
+			monsterLevelLabel.setText("Monster Level: " + monsterRoom.getLevel());
 			gameLogPanel.setBackground(monsterRoomBG);
 		} else if (game.getCurrentRoom() instanceof EventRoom) {
 			monsterHpLabel.setText("Monster HP: N/A");
+			monsterLevelLabel.setText("Monster Level: N/A");
 			gameLogPanel.setBackground(eventRoomBG);
-			gameLogPanel.repaint();
 		} else {
 			monsterHpLabel.setText("Monster HP: N/A");
+			monsterLevelLabel.setText("Monster Level: N/A");
 			gameLogPanel.setBackground(gachaRoomBG);
 		}
 
@@ -174,7 +243,7 @@ public class GameFrame extends JFrame {
 		for (int i = 0; i < roomButtons.length; i++) {
 			boolean available = rooms != null && i < rooms.size() && game.isInGacha() && !game.isWaitingForDiscard();
 			roomButtons[i].setEnabled(available);
-			roomButtons[i].setText(available ? (i + 1) + ". " + rooms.get(i).toString() : "Room " + (i + 1));
+			roomButtons[i].setText(available ? "(" + (i + 1) + ") " + rooms.get(i).toString() : "Room " + (i + 1));
 		}
 
 		attackButton.setEnabled(game.isInBattle());
@@ -207,11 +276,11 @@ public class GameFrame extends JFrame {
 
 		Backpack backpack = game.getPlayer().getBackpack();
 		for (int i = 0; i < backpack.size(); i++) {
-			JButton discardButton = buildButton("Drop " + backpack.getItem(i).getName(), "DISCARD" + i);
+			JButton discardButton = buildButton(backpack.getItem(i).getName(), "DISCARD" + i);
 			discardButton.setFocusable(false);
 			discardPanel.add(discardButton);
 		}
-		JButton discardNewButton = buildButton("Drop New: " + game.getPendingItem().getName(), "DISCARD" + backpack.size());
+		JButton discardNewButton = buildButton("New: " + game.getPendingItem().getName(), "DISCARD" + backpack.size());
 		discardNewButton.setFocusable(false);
 		discardPanel.add(discardNewButton);
 		discardPanel.revalidate();
@@ -238,9 +307,75 @@ public class GameFrame extends JFrame {
 				break;
 		}
 		if (item == null) {
-			return key + ": Empty";
+			return "(" + key + ") Empty";
 		}
-		return key + ": " + item.getName();
+		return "(" + key + ") " + item.getName();
+	}
+	
+	private void showDisplay(ImageIcon icon, String text) {
+	    displayImage.setIcon(scaleIcon(icon, 220, 220));
+	    displayText.setText(text);
+	}
+	
+	private void showDisplay(ImageIcon icon, String text, int w, int h) {
+		displayImage.setIcon(scaleIcon(icon, w, h));
+	    displayText.setText(text);
+	}
+	
+	public void showPlayerDisplay() {
+		String guide = "Defeat all monsters to escape from the Dungeon!";
+		guide += "\n\n=== How to Play ===";
+		guide += "\n[G] Pull Gacha";
+		guide += "\n[1] [2] [3] Choose a Room";
+		guide += "\n[A] Attack";
+		guide += "\n[D] Dodge";
+		guide += "\n[Q] [W] [E] [R] [T] Use Item";
+		guide += "\n\n=== Tips ===";
+		guide += "\n- You need gacha tickets to pull gacha";
+		guide += "\n- If your backpack is full, you must discard one item";
+		guide += "\n- Read item descriptions carefully before use";
+		guide += "\n- Some items can harm you...";
+		showDisplay(playerImage, guide);
+		displayText.setCaretPosition(0);
+	}
+	
+	public void showMonsterDisplay(int level) {
+		showDisplay(monsterImage, "Monster Level " + level);
+	}
+	
+	public void showEventDisplay() {
+		showDisplay(questionMarkImage, "A random event will occur!");
+	}
+	
+	public void showItemDisplay(Item item) {
+		if (item == null) {
+			showDisplay(backpackImage, "Your backpack");
+		} else if (item instanceof BombItem) {
+			showDisplay(bombImage, item.getMsg(), 1000, 1000);
+		} else if (item instanceof CursedSkull) {
+			showDisplay(skullImage, item.getMsg());
+		} else if (item instanceof InstantKillSword) {
+			showDisplay(swordImage, item.getMsg());
+		} else if (item instanceof LuckyCharm) {
+			showDisplay(luckyCharmImage, item.getMsg());
+		} else if (item instanceof PotionItem) {
+			showDisplay(potionImage, item.getMsg());
+		} else if (item instanceof ShieldItem) {
+			showDisplay(potionImage, item.getMsg());
+		}
+	}
+	
+	private ImageIcon scaleIcon(ImageIcon icon, int maxW, int maxH) {
+	    Image img = icon.getImage();
+	    int w = img.getWidth(null);
+	    int h = img.getHeight(null);
+
+	    double scale = Math.min((double) maxW / w, (double) maxH / h);
+	    int newW = (int) (w * scale);
+	    int newH = (int) (h * scale);
+
+	    Image scaled = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+	    return new ImageIcon(scaled);
 	}
 	
 	private class BackgroundPanel extends JPanel {
