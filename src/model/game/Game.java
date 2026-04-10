@@ -210,7 +210,7 @@ public class Game {
 			item.use(player, monster);
 			player.getBackpack().removeItem(index);
 			actionMsg += "\nYou used a " + item.getName() + "!";
-			actionMsg += "\n" + item.getMsg();
+			actionMsg += "\n(" + item.getMsg() + ")";
 		}
 		if (!checkMonsterDefeated()) {
 			monsterTurn(false);
@@ -227,7 +227,7 @@ public class Game {
 		Monster monster = mRoom.getMonster();
 		if (player.attack()) {
 			monster.damage(5);
-			actionMsg += "\nAttack successful! [Monster -5 HP]";
+			actionMsg += "\nAttack successful! (Monster -5 HP)";
 		} else {
 			actionMsg += "\nAttack failed!";
 		}
@@ -255,7 +255,7 @@ public class Game {
 				actionMsg += "\nDodge successful!";
 			} else {
 				player.damage(5);
-				actionMsg += "\nDodge failed! [Player -5 HP]";
+				actionMsg += "\nDodge failed! (Player -5 HP)";
 				updateGameStatus();
 			}
 		} else if (monster.attack()){
@@ -265,11 +265,11 @@ public class Game {
 			int newShield = player.getShield();
 			int newHP = player.getHp();
 			if (oldShield > newShield && oldHP == newHP) {
-				actionMsg += "\nMonster attack successful! [Shield -" + (oldShield - newShield) + "]";
+				actionMsg += "\nMonster attack successful! (Shield -" + (oldShield - newShield) + ")";
 			} else if (oldShield > newShield && oldHP > newHP) {
-				actionMsg += "\nMonster attack successful! [Shield -" + (oldShield - newShield) + ", Player -" + (oldHP - newHP) + "]";
+				actionMsg += "\nMonster attack successful! (Shield -" + (oldShield - newShield) + ", Player -" + (oldHP - newHP) + ")";
 			} else {
-				actionMsg += "\nMonster attack successful! [Player -5 HP]";
+				actionMsg += "\nMonster attack successful! (Player -5 HP)";
 			}
 			updateGameStatus();
 		} else {

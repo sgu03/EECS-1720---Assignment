@@ -120,6 +120,7 @@ public class GameController extends MouseInputAdapter implements ActionListener,
 		}
 
 		game.updateGameStatus();
+		view.showPlayerDisplay();
 		view.refresh();
 	}
 
@@ -162,20 +163,24 @@ public class GameController extends MouseInputAdapter implements ActionListener,
 			}
 			view.showItemDisplay(null);
 		} else if (command.startsWith("ROOM")) {
-			int index = Integer.parseInt(command.substring(4));
-			if (game.getNextRoomList() != null && index < game.getNextRoomList().size()) {
-				Room room = game.getNextRoomList().get(index);
-				if (room instanceof MonsterRoom) {
-					MonsterRoom mRoom = (MonsterRoom) room;
-					view.showMonsterDisplay(mRoom.getLevel());
+			if (game.getCurrentRoom() instanceof GachaRoom) {
+				int index = Integer.parseInt(command.substring(4));
+				if (game.getNextRoomList() != null && index < game.getNextRoomList().size()) {
+					Room room = game.getNextRoomList().get(index);
+					if (room instanceof MonsterRoom) {
+						MonsterRoom mRoom = (MonsterRoom) room;
+						view.showMonsterDisplay(mRoom.getLevel());
+					}
+					else if (room instanceof EventRoom) {
+						view.showEventDisplay();
+					}
+					else {
+						view.showPlayerDisplay();
+					}
+					return;
 				}
-				else if (room instanceof EventRoom) {
-					view.showEventDisplay();
-				}
-				else {
-					view.showPlayerDisplay();
-				}
-				return;
+			} else {
+				view.showPlayerDisplay();
 			}
 		}
 	}
