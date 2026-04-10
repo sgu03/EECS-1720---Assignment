@@ -7,7 +7,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JSlider;
 import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 
 import model.game.Game;
@@ -16,7 +19,7 @@ import model.items.Item;
 import model.rooms.*;
 import view.*;
 
-public class GameController extends MouseInputAdapter implements ActionListener, KeyListener {
+public class GameController extends MouseInputAdapter implements ActionListener, KeyListener, ChangeListener {
 	private final Game game;
 	private GameFrame view;
 	private StartFrame startView;
@@ -97,6 +100,7 @@ public class GameController extends MouseInputAdapter implements ActionListener,
 		} else if ("DODGE".equals(command)) {
 			game.dodgeMonsterAttack();
 		} else if (command.startsWith("ROOM")) {
+			if (game.getCurrentRoom() instanceof MonsterRoom) return;
 			game.chooseNextRoom(Integer.parseInt(command.substring(4)));
 			if (game.getCurrentRoom() instanceof EventRoom) {
 				view.refresh();
@@ -189,6 +193,14 @@ public class GameController extends MouseInputAdapter implements ActionListener,
 	public void mouseExited(MouseEvent e) {
 		if (view != null) {
 			view.showPlayerDisplay();
+		}
+	}
+	
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		if (e.getSource() instanceof JSlider) {
+			JSlider slider = (JSlider) e.getSource();
+			startView.setDifficulty(slider.getValue());
 		}
 	}
 }
