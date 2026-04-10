@@ -218,7 +218,7 @@ public class GameFrame extends JFrame {
 		playerHpLabel.setText("Player HP: " + game.getPlayer().getHp());
 		dodgeChanceLabel.setText("Next Dodge Chance: " + (int)(game.getPlayer().getDodgeChance() * 100) + "%");
 		ticketLabel.setText("Gacha Tickets: " + game.getPlayer().getGachaTickets());
-		shieldLabel.setText("Shield Count:" + game.getPlayer().getShield());
+		shieldLabel.setText("Shield Count: " + game.getPlayer().getShield());
 		monstersLeftLabel.setText("Monsters Left: " + game.getMonstersLeft());
 		currentRoomLabel.setText("Current Room: " + game.getCurrentRoom().toString());
 		actionArea.setText(game.getActionMsg());
