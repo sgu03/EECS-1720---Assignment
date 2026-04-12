@@ -5,21 +5,41 @@
 ## Overview
 Dungeon Gacha Adventure Game is a simple turn-based adventure game built in Java with Swing. In this game, the player explores a dungeon made up of different room types, random events, and monster encounters. The core mechanic of the game is a gacha system, which allows the player to pull random items that may either help or harm them during their journey.
 
-The project is designed as an interactive GUI application that combines object-oriented class design, inheritance, composition, and event handling. It follows a model-view-controller (MVC) style structure, where the model manages the game logic, the view displays the interface, and the controller handles user input and updates the game.
+The project follows a MVC style structure, where the model manages the game logic, the view displays the interface, and the controller handles user input and updates the game.
 
 ## How to Run the Program
 1.	Clone or download the project.
 2.	Open the project in a Java IDE such as Eclipse.
-4.	Make sure all source files and resource folders are imported correctly. 
-5.	Compile the project. 
-6.	Run the Main class in app package to launch the start screen. 
-7.	Select a difficulty level and character type, then start the game.
+3.	Compile the project. 
+4.	Run the **Main class in app package** to launch the start screen. 
+5.	Select a difficulty level and character type, then start the game.
 
 ## Gameplay
-At the start of the game, the player chooses a dungeon difficulty level and a character type. Different character types provide different advantages, such as stronger attacks, guaranteed dodging, extra starting HP, or better gacha luck.
+At the start of the game, the player chooses a dungeon difficulty level and a character type. Different character types provide different advantages, such as stronger attacks, better gacha luck, extra starting HP, or extra starting shield.
 
 The player begins in the Gacha Room with 40 HP and 5 gacha tickets. In this room, the player can spend tickets to pull random items from the gacha system and store them in their backpack.
 After preparing in the Gacha Room, the player chooses the next room to enter from a list of available room options. The game shows the difficulty level of each room before the player makes a choice. The player may enter either an Event Room or a Monster Room.
+
+## Gacha System and Items
+The gacha system is one of the main features of the game. Each time the player pulls, they receive a random item with different probabilities.
+
+Possible items include:
+
+•	**Healing Potion**: restores 10 HP 
+
+•	**Poison Potion**: damages the player by 5 HP 
+
+•	**Shield**: gives the player 5 shield points 
+
+•	**Bomb**: deals 15 damage to the monster 
+
+•	**Lucky Charm**: guarantees the next dodge 
+
+•	**Instant Kill Sword**: defeats the monster instantly 
+
+•	**Cursed Skull**: kills the player instantly 
+
+All items are stored in the player’s backpack. If the backpack is full, the player must discard an existing item before adding the new one.
 
 ## Event Rooms
 In an Event Room, a random event happens immediately. Examples include:
@@ -45,27 +65,6 @@ A normal attack has a 60% success rate, while dodge has a base success rate of 8
 
 After the player successfully clears a room, they receive additional gacha tickets based on the difficulty of that room and return to the Gacha Room to prepare for the next challenge.
 
-## Gacha System and Items
-The gacha system is one of the main features of the game. Each time the player pulls, they receive a random item with different probabilities.
-
-Possible items include:
-
-•	Healing Potion: restores 10 HP 
-
-•	Poison Potion: damages the player by 5 HP 
-
-•	Shield: gives the player 5 shield points 
-
-•	Bomb: deals 15 damage to the monster 
-
-•	Lucky Charm: guarantees the next dodge 
-
-•	Instant Kill Sword: defeats the monster instantly 
-
-•	Cursed Skull: kills the player instantly 
-
-All items are stored in the player’s backpack. If the backpack is full, the player must discard an existing item before adding the new one.
-
 ## GUI Features
 The game includes a graphical user interface that displays important game information such as:
 
@@ -85,7 +84,7 @@ The game includes a graphical user interface that displays important game inform
 
 •	action log 
 
-The GUI also includes a display panel that provides additional information to the player. By moving the mouse over certain interactive components, such as room choices, backpack items, or other game elements, the player can view related descriptions and information in the display panel. This helps the player better understand the effects of items and the meaning of different game elements during gameplay.
+The GUI also includes a display panel that provides additional information to the player. By moving the mouse over certain interactive components, such as room choices and backpack items, the player can view related descriptions and information in the display panel. This helps the player better understand the effects of items during gameplay.
 
 ## Controls
 ### Start Screen
