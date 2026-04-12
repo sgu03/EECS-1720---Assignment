@@ -123,12 +123,12 @@ public class GameFrame extends JFrame {
 		dungeonInfoPanel.setPreferredSize(new Dimension(130, 60));
 
 		//currentRoomLabel = new JLabel();
-		currentRoomLabel.setForeground(LIGHT_BLUE);
-		currentRoomLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+		currentRoomLabel.setForeground(new Color(143, 196, 227));
+		currentRoomLabel.setFont(new Font("Arial", Font.BOLD, 12));
 
 		//monstersLeftLabel = new JLabel();
 		monstersLeftLabel.setForeground(LIGHT_GREEN);
-		monstersLeftLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+		monstersLeftLabel.setFont(new Font("Arial", Font.BOLD, 12));
 
 		dungeonInfoPanel.add(currentRoomLabel);
 		dungeonInfoPanel.add(monstersLeftLabel);
@@ -154,7 +154,7 @@ public class GameFrame extends JFrame {
 		dodgeChanceLabel.setFont(new Font("Arial", Font.BOLD, 12));
 
 //		shieldLabel = new JLabel();
-		shieldLabel.setForeground(PURPLE);
+		shieldLabel.setForeground(new Color(193, 143, 227));
 		shieldLabel.setFont(new Font("Arial", Font.BOLD, 12));
 
 		playerInfoPanel.add(playerHpLabel);
@@ -176,7 +176,7 @@ public class GameFrame extends JFrame {
 
 //		monsterLevelLabel = new JLabel();
 		monsterLevelLabel.setForeground(LIGHT_GREEN);
-		monsterLevelLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+		monsterLevelLabel.setFont(new Font("Arial", Font.BOLD, 12));
 		monsterInfoPanel.add(monsterHpLabel);
 		monsterInfoPanel.add(monsterLevelLabel);
 		infoPanel.add(monsterInfoPanel);
@@ -228,7 +228,7 @@ public class GameFrame extends JFrame {
 		displayText = new JTextArea();
 		displayText.setEditable(false);
 		displayText.setOpaque(true);
-		displayText.setBackground(PURPLE);
+		displayText.setBackground(new Color(86, 37, 128));
 		displayText.setForeground(Color.WHITE);
 		displayText.setFont(new Font("Arial", Font.PLAIN, 12));
 		displayText.setCaretPosition(0);
