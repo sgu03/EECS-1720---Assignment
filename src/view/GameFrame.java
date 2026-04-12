@@ -64,6 +64,8 @@ public class GameFrame extends JFrame {
 	private static final Color GREEN = new Color(43, 208, 114);
 	private static final Color RED = new Color(222, 57, 38);
 	private static final Color PURPLE = new Color(149, 35, 146);
+	private static final Color DISABLED_GRAY = new Color(95, 95, 95);
+	private static final Color DISABLED_TEXT = new Color(210, 210, 210);
 
 	public GameFrame(Game game) {
 		super("Dungeon Gacha Adventure");
@@ -220,7 +222,7 @@ public class GameFrame extends JFrame {
 
 		displayImage = new JLabel();
 		displayImage.setHorizontalAlignment(JLabel.CENTER);
-		displayImage.setPreferredSize(new Dimension(300, 220));
+		displayImage.setPreferredSize(new Dimension(300, 200));
 		displayPanel.add(displayImage, BorderLayout.CENTER);
 
 		displayText = new JTextArea();
@@ -234,7 +236,7 @@ public class GameFrame extends JFrame {
 		JScrollPane displayScroll = new JScrollPane(displayText);
 		displayScroll.setBorder(BorderFactory.createEmptyBorder());
 		displayScroll.setOpaque(false);
-		displayScroll.setPreferredSize(new Dimension(300, 160));
+		displayScroll.setPreferredSize(new Dimension(300, 200));
 		displayPanel.add(displayScroll, BorderLayout.SOUTH);
 
 		showPlayerDisplay();
@@ -310,6 +312,7 @@ public class GameFrame extends JFrame {
 
 	private JButton createStyledButton(String text, String actionCommand, Color bgColor) {
 		JButton button = new JButton(text);
+		button.setOpaque(true);
 		button.setActionCommand(actionCommand);
 		button.setBackground(bgColor);
 		button.setForeground(Color.BLACK);
@@ -319,24 +322,12 @@ public class GameFrame extends JFrame {
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		// Hover effect
-		button.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseEntered(java.awt.event.MouseEvent e) {
-				button.setBackground(bgColor.brighter());
-			}
-
-			public void mouseExited(java.awt.event.MouseEvent e) {
-				button.setBackground(bgColor);
-			}
-		});
+		button.addMouseListener(controller);
 
 		button.addActionListener(controller);
 		button.addKeyListener(controller);
 		button.setFocusable(false);
 		return button;
-	}
-
-	private JButton buildButton(String text, String actionCommand) {
-		return createStyledButton(text, actionCommand, new Color(70, 80, 100));
 	}
 
 	public void refresh() {
@@ -385,24 +376,23 @@ public class GameFrame extends JFrame {
 		ArrayList<Room> rooms = game.getNextRoomList();
 		for (int i = 0; i < roomButtons.length; i++) {
 			boolean available = rooms != null && i < rooms.size() && game.isInGacha() && !game.isWaitingForDiscard();
-			roomButtons[i].setEnabled(available);
 			if (available) {
 				roomButtons[i].setText("(" + (i + 1) + ") " + rooms.get(i).toString());
 				if (rooms.get(i) instanceof MonsterRoom) {
-					roomButtons[i].setBackground(new Color(180, 50, 50));
+					setButtonUsable(roomButtons[i], true, new Color(180, 50, 50));
 				} else {
-					roomButtons[i].setBackground(MID_BLUE);
+					setButtonUsable(roomButtons[i], true, MID_BLUE);
 				}
 			} else {
 				roomButtons[i].setText("Room " + (i + 1));
-				roomButtons[i].setBackground(new Color(60, 70, 85));
+				setButtonUsable(roomButtons[i], false, MID_BLUE);
 			}
 		}
 
-		attackButton.setEnabled(game.isInBattle());
-		dodgeButton.setEnabled(game.isInBattle());
-		gachaButton.setEnabled(game.isInGacha() && !game.isWaitingForDiscard());
-
+		setButtonUsable(attackButton, game.isInBattle(), RED);
+		setButtonUsable(dodgeButton, game.isInBattle(), MID_BLUE);
+		setButtonUsable(gachaButton, game.isInGacha() && !game.isWaitingForDiscard(), GOLD);
+		
 		refreshBackpack();
 		refreshDiscardPanel();
 		repaint();
@@ -414,15 +404,15 @@ public class GameFrame extends JFrame {
 		char[] keys = { 'Q', 'W', 'E', 'R', 'T' };
 		for (int i = 0; i < itemButtons.length; i++) {
 			boolean hasItem = i < backpack.size();
-			itemButtons[i].setEnabled(hasItem && game.isInBattle());
+			boolean usable = hasItem && game.isInBattle();
 			if (hasItem) {
 				itemButtons[i].setText("(" + keys[i] + ") " + backpack.getItem(i).getName());
 				itemButtons[i].setToolTipText(backpack.getItem(i).getMsg());
-				itemButtons[i].setBackground(GREEN);
+				setButtonUsable(itemButtons[i], usable, GREEN);
 			} else {
 				itemButtons[i].setText("(" + keys[i] + ") Empty");
 				itemButtons[i].setToolTipText("Empty slot");
-				itemButtons[i].setBackground(new Color(60, 70, 85));
+				setButtonUsable(itemButtons[i], false, GREEN);
 			}
 		}
 	}
@@ -448,30 +438,16 @@ public class GameFrame extends JFrame {
 		discardPanel.revalidate();
 		discardPanel.repaint();
 	}
-
-	private String shortcutLabel(int index, Item item) {
-		char key;
-		switch (index) {
-		case 0:
-			key = 'Q';
-			break;
-		case 1:
-			key = 'W';
-			break;
-		case 2:
-			key = 'E';
-			break;
-		case 3:
-			key = 'R';
-			break;
-		default:
-			key = 'T';
-			break;
+	
+	private void setButtonUsable(JButton button, boolean usable, Color enabledColor) {
+		button.setEnabled(usable);
+		if (usable) {
+			button.setBackground(enabledColor);
+			button.setForeground(Color.BLACK);
+		} else {
+			button.setBackground(DISABLED_GRAY);
+			button.setForeground(DISABLED_TEXT);
 		}
-		if (item == null) {
-			return "(" + key + ") Empty";
-		}
-		return "(" + key + ") " + item.getName();
 	}
 
 	private void showDisplay(ImageIcon icon, String text) {
@@ -561,7 +537,7 @@ public class GameFrame extends JFrame {
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), this);
-			g2d.setColor(new Color(0, 0, 0, 180));
+			g2d.setColor(new Color(0, 0, 0, 100));
 			g2d.fillRect(0, 0, getWidth(), getHeight());
 		}
 	}

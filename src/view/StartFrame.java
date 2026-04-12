@@ -93,6 +93,7 @@ public class StartFrame extends JFrame {
 		start.setAlignmentX(CENTER_ALIGNMENT); 
 		
 		JPanel typePanel = new JPanel(new GridBagLayout());
+		typePanel.setBackground(new Color(240, 240, 245));
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 0);
 		gbc.anchor = GridBagConstraints.WEST;
@@ -123,7 +124,7 @@ public class StartFrame extends JFrame {
 		gbc.anchor = GridBagConstraints.WEST;
 		typePanel.add(typeDescription, gbc);
 		
-		pane.add(Box.createVerticalStrut(38));
+		//pane.add(Box.createVerticalStrut(38));
 		pane.add(text);
 		pane.add(Box.createVerticalStrut(10));
 		start.addMouseListener(controller);
