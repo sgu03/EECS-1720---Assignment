@@ -55,7 +55,7 @@ public class StartFrame extends JFrame {
 		text.setAlignmentX(CENTER_ALIGNMENT);
 		
 		slider = new JSlider(1, 5, 3);
-		slider.addChangeListener(this);
+		slider.addChangeListener(controller);
 		slider.setMajorTickSpacing(1); // adding ticks to slider
 		slider.setPaintTicks(true);
 		slider.setPreferredSize(new Dimension(350, 60));
