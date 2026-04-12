@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>docs/gp31_ACADEMIC-INTEGRITY-STATEMENT.pdf</name>
+			<type>1</type>
+			<location>C:/Users/User/Downloads/gp31_ACADEMIC-INTEGRITY-STATEMENT.pdf</location>
+		</link>
+	</linkedResources>
 </projectDescription>
