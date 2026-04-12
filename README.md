@@ -125,3 +125,38 @@ Sophia: Gacha system logic and items probabilities
 Angel: GUI layout and UML document
 
 Tian: Keyboard input and event listener handling
+
+## References of sources
+https://ca.pinterest.com/pin/925700898419422747/ :character
+
+https://ca.pinterest.com/pin/51298883246255504/ :monster
+
+https://www.reddit.com/r/PixelArt/comments/8e7bu6/occc_buried_shrine_gif/ : monsterroom
+
+https://www.reddit.com/media?url=https%3A%2F%2Fi.redd.it%2Fikuoza7zbxf51.png : gatcharoom 
+
+https://ca.pinterest.com/pin/18929260937822481/ :eventroom
+
+https://ca.pinterest.com/pin/4081455907773574/ :backpack 
+
+https://ca.pinterest.com/pin/5770305769402744/ :player
+
+https://ca.pinterest.com/pin/915778905485280683/ :bomb
+
+https://ca.pinterest.com/pin/308707749478504107/ :cursedSkull
+
+https://ca.pinterest.com/pin/37225134415932317/ :luckyCharm
+
+https://ca.pinterest.com/pin/39617671718989003/ :shieldItem
+
+https://emojiterra.com/question-mark/ :questionmark
+
+https://ca.pinterest.com/pin/124200902218441231/ :gameicon 
+
+https://ca.pinterest.com/pin/2392606048229233/ :warrior
+
+https://ca.pinterest.com/pin/225672631323171656/ :rogue
+
+https://ca.pinterest.com/pin/562105597264969547/ :tank
+
+
