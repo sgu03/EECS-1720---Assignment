@@ -125,3 +125,5 @@ Sophia: Gacha system logic and items probabilities
 Angel: GUI layout and UML document
 
 Tian: Keyboard input and event listener handling
+
+## References of sources
