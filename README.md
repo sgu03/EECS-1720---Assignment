@@ -158,4 +158,6 @@ https://ca.pinterest.com/pin/225672631323171656/ :rogue
 
 https://ca.pinterest.com/pin/562105597264969547/ :tank
 
+https://ca.pinterest.com/pin/161003755425833146/ :potion
 
+https://ca.pinterest.com/pin/842947255291371791/ :instandKillSword  
