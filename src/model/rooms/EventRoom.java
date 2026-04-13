@@ -37,8 +37,18 @@ public class EventRoom extends Room {
 	public String applyEvent(Player player) {
 		switch (type) {
 			case 0:
+				int oldShield = player.getShield();
+				int oldHP = player.getHp();
 				player.damage(5);
-				return "Your HP -5";
+				int newShield = player.getShield();
+				int newHP = player.getHp();
+				if (oldShield > newShield && oldHP == newHP) {
+					return "Shield -" + (oldShield - newShield);
+				} else if (oldShield > newShield && oldHP > newHP) {
+					return "Shield -" + (oldShield - newShield) + ", Player -" + (oldHP - newHP) + " HP)";
+				} else {
+					return "Your HP -5";
+				}
 			case 1:
 			case 2:
 				player.heal(10);
