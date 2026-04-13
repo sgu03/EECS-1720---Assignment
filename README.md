@@ -1,4 +1,4 @@
-# EECS-1720---Assignment
+# Group31_EECS-1720---Assignment
 
 # Dungeon Gacha Adventure Game
 
@@ -11,7 +11,7 @@ The project follows a MVC style structure, where the model manages the game logi
 1.	Clone or download the project.
 2.	Open the project in a Java IDE such as Eclipse.
 3.	Compile the project. 
-4.	Run the **Main class in app package** to launch the start screen. 
+4.	Run the **Main.java in app package** to launch the start screen. 
 5.	Select a difficulty level and character type, then start the game.
 
 ## Gameplay
@@ -78,11 +78,11 @@ The game includes a graphical user interface that displays important game inform
 
 •	number of gacha tickets 
 
-•	backpack contents 
-
 •	room choices 
 
 •	action log 
+
+•	backpack contents 
 
 The GUI also includes a display panel that provides additional information to the player. By moving the mouse over certain interactive components, such as room choices and backpack items, the player can view related descriptions and information in the display panel. This helps the player better understand the effects of items during gameplay.
 
