@@ -89,6 +89,7 @@ public class GameController extends MouseInputAdapter implements ActionListener,
 		
 		if (command.equals("START")) {
 			game.setMonsterCount(startView.getDifficulty());
+			game.startGame();
 			this.view = new GameFrame(game);
 			startView.setVisible(false);
 			return;

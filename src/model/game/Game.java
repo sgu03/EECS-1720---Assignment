@@ -27,7 +27,6 @@ public class Game {
 	
 	public Game(int monsterCount) {
 		player = new Player(PLAYER_HP);
-		map = new Map(monsterCount);
 		this.monsterCount = monsterCount;
 		monstersLeft = monsterCount;
 		nextRoomList = new ArrayList<Room>();
@@ -51,6 +50,7 @@ public class Game {
 	
 	public void setMonsterCount(int monsterCount) {
 		this.monsterCount = monsterCount;
+		this.map = new Map(monsterCount);
 		this.monstersLeft = monsterCount;
 	}
 	
